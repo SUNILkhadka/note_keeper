@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:note_keeper/controllers/google_sign_in.dart';
 import 'package:note_keeper/core/app_theme.dart';
 import 'package:note_keeper/core/routes.dart';
-import 'package:note_keeper/views/login_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Beta Notes Keeping',
         theme: MainAppTheme.dark,
-        initialRoute: RoutesManager.loginpage,
+        initialRoute:  RoutesManager.loginpage,
         onGenerateRoute: RoutesManager.routeSettings,
       ),
     );
