@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:note_keeper/controllers/google_sign_in.dart';
+import 'package:note_keeper/controllers/authcontroller.dart';
 import 'package:note_keeper/core/app_color.dart';
 import 'package:note_keeper/core/app_text_style.dart';
 import 'package:note_keeper/core/routes.dart';
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     iconData: FontAwesomeIcons.google,
                     onPressed: () async {
                       final authcontroller =
-                          Provider.of<Authcontroller>(context);
+                          Provider.of<AuthController>(context);
                       await authcontroller.googleSignIn();
                       if (mounted) return;
                       Navigator.popAndPushNamed(
