@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:note_keeper/core/app_color.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note_keeper/core/routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,22 +9,32 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 50,
-            color: Colors.white54,
+      appBar: AppBar(
+        centerTitle: true,
+        title: const TextField(
+          decoration: InputDecoration(
+            hintStyle: TextStyle(
+              color: Colors.white24,
+            ),
+            hintText: 'Search',
+            border: InputBorder.none,
           ),
-        ],
+        ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+      body: Container(),
+      bottomNavigationBar: Container(
+        height: 30,
+        // color: Colors.white38,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: AppColor.backgroundshadeblue,
+        onPressed: () {
+          Navigator.pushNamed(context, RoutesManager.newnote);
+        },
+        child: const Icon(
+          FontAwesomeIcons.plus,
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     ));
   }
 }
