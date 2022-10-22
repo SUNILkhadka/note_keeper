@@ -11,6 +11,7 @@ class AddNoteScreen extends StatelessWidget {
     fontWeight: FontWeight.w800,
     letterSpacing: 2,
   );
+  
 
   @override
   Widget build(BuildContext context) {

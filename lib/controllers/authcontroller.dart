@@ -55,4 +55,5 @@ class AuthController extends ChangeNotifier {
     titlecontroller.clear();
     notecontroller.clear();
   }
+
 }
