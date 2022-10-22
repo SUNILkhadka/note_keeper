@@ -56,4 +56,18 @@ class AuthController extends ChangeNotifier {
     notecontroller.clear();
   }
 
+  // Snapshot to Object
+  List<Note> snapshotToMap(AsyncSnapshot<QuerySnapshot>? snapshot) {
+    List<Note> notes;
+    notes = snapshot!.data!.docs
+        .map(
+          (document) => Note(
+            id: document.id,
+            title: document['title'],
+            note: document['note'],
+          ),
+        )
+        .toList();
+    return notes;
+  }
 }

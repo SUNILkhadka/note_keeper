@@ -1,23 +1,23 @@
-
-
 // Note model class to store and retrive notes.
-class Note{
-  
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class Note {
   Note({
-      this.id,
-      required this.title,
-      required this.note,
-    });
+    this.id,
+    required this.title,
+    required this.note,
+  });
 
   String? id;
   String title;
   String note;
 
-  // object to Json
-  Map<String,Object> toJson() => {
-    'title': title,
-    'note' : note,
-   };
+  // Object to Json
+  Map<String, Object> toJson() => {
+        'title': title,
+        'note': note,
+      };
 
 
 }
