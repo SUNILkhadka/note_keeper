@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authcontroller = Provider.of<AuthController>(context, listen: true);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,
@@ -71,10 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: "Signin with Google",
                     iconData: FontAwesomeIcons.google,
                     onPressed: () async {
-                      final authcontroller =
-                          Provider.of<AuthController>(context);
                       await authcontroller.googleSignIn();
-                      if (mounted) return;
+                      if (!mounted) return;
                       Navigator.popAndPushNamed(
                           context, RoutesManager.homepage);
                     },
@@ -104,10 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
       child: ElevatedButton.icon(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            surfaceTintColor: Colors.white60,
-            backgroundColor: backgroundColor ?? Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))),
+          surfaceTintColor: Colors.white60,
+          backgroundColor: backgroundColor ?? Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
         icon: Icon(
           iconData,
           color: iconColor,
