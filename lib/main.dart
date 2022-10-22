@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Beta Notes Keeping',
         theme: MainAppTheme.dark,
-        initialRoute:  FirebaseAuth.instance.currentUser == null 
-          ? RoutesManager.loginpage
-          : RoutesManager.homepage,
+        initialRoute: FirebaseAuth.instance.currentUser == null
+            ? RoutesManager.loginpage
+            : RoutesManager.homepage,
         onGenerateRoute: RoutesManager.routeSettings,
       ),
     );
