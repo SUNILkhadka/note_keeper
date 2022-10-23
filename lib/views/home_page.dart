@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/authcontroller.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:note_keeper/models/note.dart';
+import 'package:note_keeper/views/drawer.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
     final authcontroller = Provider.of<AuthController>(context);
     return SafeArea(
       child: Scaffold(
+        drawer: DrawerSettingPage(),
         appBar: AppBar(
           centerTitle: true,
           title: const TextField(
@@ -50,14 +52,53 @@ class HomeScreen extends StatelessWidget {
           ) {
             if (snapshot.hasData) {
               List<Note> notes = authcontroller.snapshotToMap(snapshot);
-              return ListView.separated(
-                  itemBuilder: (context, index) => ListTile(
-                        title: Text(notes[index].title),
-                        subtitle: Text(notes[index].note),
+              return ListView.builder(
+                  itemBuilder: (context, index) => Dismissible(
+                        confirmDismiss: (direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Confirm"),
+                                content: const Text(
+                                    "Are you sure you wish to delete this item?"),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: const Text("DELETE")),
+                                  ElevatedButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text("CANCEL"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        onDismissed: (direction) {
+                          if (direction == DismissDirection.endToStart) {
+                            notes.removeAt(direction.index);
+                          }
+                          if (direction == DismissDirection.endToStart) {
+                            notes.removeAt(direction.index);
+                          }
+                        },
+                        key: Key(notes[index].id!),
+                        child: ListTile(
+                          title: Text(
+                            notes[index].title,
+                            maxLines: 1,
+                          ),
+                          subtitle: Text(
+                            notes[index].note,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ),
-                  separatorBuilder: ((context, _) => const SizedBox(
-                        height: 5,
-                      )),
+                  // separatorBuilder: ((context, _) => const SizedBox()),
                   itemCount: notes.length);
             }
             if (snapshot.hasError) {

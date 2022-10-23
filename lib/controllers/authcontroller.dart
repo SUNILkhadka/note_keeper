@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,32 @@ class AuthController extends ChangeNotifier {
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
+  Future<bool> checkUserConnection() async {
+    try {
+      print('Trying to lookup google.com');
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      } else {
+        print('no internet !! , false');
+        return false;
+      }
+    } on SocketException catch (_) {
+      print('socket exception');
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> saveNotes() async {
+    bool connSts = await checkUserConnection();
+    print(connSts);
+    if (!connSts) {
+      print(connSts);
+      print('No Internet Connection !');
+      return false;
+    }
     await firestore
         .collection('/${firebaseAuth.currentUser!.uid}')
         .doc()
@@ -28,8 +54,7 @@ class AuthController extends ChangeNotifier {
             note: notecontroller.text,
           ).toJson(),
         )
-        .then((_) => print("user-created"))
-        .catchError((error) => print('User Creation failed $error'));
+        .then((_) => print("Note Upoaded"));
     clearController();
     return true;
   }
