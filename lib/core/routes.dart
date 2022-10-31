@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_keeper/models/note.dart';
 import 'package:note_keeper/views/add_note_page.dart';
 import 'package:note_keeper/views/home_page.dart';
 import 'package:note_keeper/views/login_page.dart';
@@ -14,10 +15,19 @@ class RoutesManager {
         return MaterialPageRoute(builder: ((context) => HomeScreen()));
 
       case (loginpage):
-        return MaterialPageRoute(builder: ((context) => LoginScreen()));    
+        return MaterialPageRoute(builder: ((context) => LoginScreen()));
 
       case (newnote):
-        return MaterialPageRoute(builder: ((context) => AddNoteScreen()));
+        if (settings.arguments == null) {
+          return MaterialPageRoute(
+            builder: ((context) => AddNoteScreen()),
+          );
+        } else {
+          final note = settings.arguments as Note;
+          return MaterialPageRoute(
+            builder: ((context) => AddNoteScreen(note: note)),
+          );
+        }
 
       default:
         throw const FormatException('Routes not found! Check the rutes');

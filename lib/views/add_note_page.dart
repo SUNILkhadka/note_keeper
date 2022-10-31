@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/authcontroller.dart';
+import 'package:note_keeper/models/note.dart';
 import 'package:provider/provider.dart';
 
 class AddNoteScreen extends StatelessWidget {
-  AddNoteScreen({super.key});
+  AddNoteScreen({
+    super.key,
+    this.note,
+  });
+  Note? note;
 
   TextStyle titleStyle = const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w800,
     letterSpacing: 2,
   );
-  
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class AddNoteScreen extends StatelessWidget {
             authcontroller.saveNotes();
             Navigator.pop(context);
           },
-          child: Icon(FontAwesomeIcons.angleLeft),
+          child: const Icon(FontAwesomeIcons.angleLeft),
         ),
         centerTitle: true,
         title: const Text('Add Note'),

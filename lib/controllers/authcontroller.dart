@@ -21,16 +21,13 @@ class AuthController extends ChangeNotifier {
 
   Future<bool> checkUserConnection() async {
     try {
-      print('Trying to lookup google.com');
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       } else {
-        print('no internet !! , false');
         return false;
       }
     } on SocketException catch (_) {
-      print('socket exception');
       return false;
     } catch (e) {
       return false;
@@ -38,10 +35,9 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<bool> saveNotes() async {
+    if (titlecontroller.text == '' && notecontroller.text == '') return false;
     bool connSts = await checkUserConnection();
-    print(connSts);
     if (!connSts) {
-      print(connSts);
       print('No Internet Connection !');
       return false;
     }
