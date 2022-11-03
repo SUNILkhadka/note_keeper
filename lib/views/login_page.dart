@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/authcontroller.dart';
 import 'package:note_keeper/core/app_color.dart';
@@ -6,14 +7,9 @@ import 'package:note_keeper/core/app_text_style.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final AppTextStyle textStyle = AppTextStyle.instance;
 
   @override
@@ -72,10 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: "Signin with Google",
                     iconData: FontAwesomeIcons.google,
                     onPressed: () async {
-                      await authcontroller.googleSignIn();
-                      if (!mounted) return;
-                      Navigator.popAndPushNamed(
-                          context, RoutesManager.homepage);
+                      await authcontroller.googleSignIn(context);
                     },
                     iconColor: Colors.orange,
                   ),

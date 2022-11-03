@@ -1,14 +1,15 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:note_keeper/core/routes.dart';
 import 'package:note_keeper/models/note.dart';
 
 class AuthController extends ChangeNotifier {
   // TextEditing Controllers
-  TextEditingController titlecontroller = TextEditingController();
-  TextEditingController notecontroller = TextEditingController();
+  final TextEditingController _titlecontroller = TextEditingController();
+  final TextEditingController _notecontroller = TextEditingController();
 
   // firebase instances
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -17,8 +18,31 @@ class AuthController extends ChangeNotifier {
   // Varaibles used for signing in
   GoogleSignIn googleSigninObj = GoogleSignIn();
   GoogleSignInAccount? _user;
-  GoogleSignInAccount get user => _user!;
+  GoogleSignInAccount? get user => _user;
+  UserCredential? userCredential;
 
+  // Controllers to update or add new note
+  TextEditingController titlecontroller(Note? note) {
+    if (note == null || note.id == '') {
+      _titlecontroller.clear();
+      return _titlecontroller;
+    } else {
+      _titlecontroller.text = note.title;
+      return _titlecontroller;
+    }
+  }
+
+  TextEditingController notecontroller(Note? note) {
+    if (note == null || note.id == '') {
+      _notecontroller.clear();
+      return _notecontroller;
+    } else {
+      _notecontroller.text = note.note;
+      return _notecontroller;
+    }
+  }
+
+  // Method to check connections
   Future<bool> checkUserConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -34,47 +58,97 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  Future<bool> saveNotes() async {
-    if (titlecontroller.text == '' && notecontroller.text == '') return false;
+  // Method to save and update notes determined by update bool flag
+  Future saveNotes(
+    BuildContext context, {
+    bool? update,
+    Note? note,
+  }) async {
+    ScaffoldMessengerState messengerState = ScaffoldMessenger.of(context);
     bool connSts = await checkUserConnection();
     if (!connSts) {
-      print('No Internet Connection !');
+      messengerState.showSnackBar(
+        const SnackBar(
+          content: Text('No Internet Connection !'),
+        ),
+      );
       return false;
     }
+    if (update == true) {
+      if (note!.title != _titlecontroller.text &&
+          note.note != _notecontroller.text) {
+        await firestore
+            .collection('/${firebaseAuth.currentUser!.uid}')
+            .doc(note.id)
+            .update(
+              Note(
+                title: _titlecontroller.text,
+                note: _notecontroller.text,
+              ).toJson(),
+            )
+            .then(
+              (_) => messengerState.showSnackBar(
+                const SnackBar(
+                  content: Text('Updated !'),
+                ),
+              ),
+            )
+            .catchError((error) => messengerState.showSnackBar(
+                  SnackBar(content: Text(error.toString())),
+                ));
+        return;
+      } else {
+        return;
+      }
+    }
+    if (_titlecontroller.text == '' && _notecontroller.text == '') return;
+
     await firestore
         .collection('/${firebaseAuth.currentUser!.uid}')
         .doc()
         .set(
           Note(
-            title: titlecontroller.text,
-            note: notecontroller.text,
+            title: _titlecontroller.text,
+            note: _notecontroller.text,
           ).toJson(),
         )
-        .then((_) => print("Note Upoaded"));
-    clearController();
+        .then(
+          (_) => messengerState.showSnackBar(
+            const SnackBar(
+              content: Text('Note Uploaded !'),
+            ),
+          ),
+        );
     return true;
   }
 
   // Methods for google sign in
-  Future googleSignIn() async {
-    final googleUser = await googleSigninObj.signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
+  Future googleSignIn(BuildContext context) async {
+    NavigatorState navigator = Navigator.of(context);
+    ScaffoldMessengerState messengerState = ScaffoldMessenger.of(context);
 
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    // Add Try catch block on _callMethod function with PlatformException
+    GoogleSignInAccount? googleUser = await googleSigninObj.signIn();
+    if (googleUser != null) {
+      _user = googleUser;
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      OAuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
+      );
+      userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
-    OAuthCredential credential = GoogleAuthProvider.credential(
-      idToken: googleAuth.idToken,
-      accessToken: googleAuth.accessToken,
-    );
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    notifyListeners();
-  }
-
-  clearController() {
-    titlecontroller.clear();
-    notecontroller.clear();
+      if (userCredential != null) {
+        navigator.pushReplacementNamed(RoutesManager.homepage);
+      }
+      notifyListeners();
+    } else {
+      messengerState.showSnackBar(
+        const SnackBar(content: Text('Signup Failed !')),
+      );
+      return;
+    }
   }
 
   // Snapshot to Object

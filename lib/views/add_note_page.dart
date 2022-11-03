@@ -5,13 +5,13 @@ import 'package:note_keeper/models/note.dart';
 import 'package:provider/provider.dart';
 
 class AddNoteScreen extends StatelessWidget {
-  AddNoteScreen({
+  const AddNoteScreen({
     super.key,
     this.note,
   });
-  Note? note;
+  final Note? note;
 
-  TextStyle titleStyle = const TextStyle(
+  final TextStyle titleStyle = const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w800,
     letterSpacing: 2,
@@ -24,8 +24,13 @@ class AddNoteScreen extends StatelessWidget {
       appBar: AppBar(
         leading: InkWell(
           onTap: () async {
-            authcontroller.saveNotes();
-            Navigator.pop(context);
+            NavigatorState nav = Navigator.of(context);
+            await authcontroller.saveNotes(
+              context,
+              update: note == null ? false : true,
+              note: note ?? note,
+            );
+            nav.pop();
           },
           child: const Icon(FontAwesomeIcons.angleLeft),
         ),
@@ -37,7 +42,7 @@ class AddNoteScreen extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              controller: authcontroller.titlecontroller,
+              controller: authcontroller.titlecontroller(note),
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: 'Title',
@@ -46,7 +51,7 @@ class AddNoteScreen extends StatelessWidget {
             ),
             Expanded(
               child: TextField(
-                controller: authcontroller.notecontroller,
+                controller: authcontroller.notecontroller(note),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: '  Note',

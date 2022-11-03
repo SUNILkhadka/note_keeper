@@ -45,7 +45,13 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          body: StreamBuilder(
+          body: authcontroller.firebaseAuth.currentUser == null
+          ? const Center(
+            child: Text(
+              'Sign in first !'
+            ),
+          )
+            : StreamBuilder(
             stream: authcontroller.firestore
                 .collection('/${authcontroller.firebaseAuth.currentUser!.uid}')
                 .snapshots(),
@@ -66,15 +72,18 @@ class HomeScreen extends StatelessWidget {
                           (note) => InkWell(
                             borderRadius: BorderRadius.circular(15),
                             onTap: () {
-                              print(note.id);
                               Navigator.pushNamed(
                                 context,
                                 RoutesManager.newnote,
                                 arguments: Note(
+                                  id: note.id,
                                   title: note.title,
                                   note: note.note,
                                 ),
                               );
+                            },
+                            onLongPress: () {
+                              
                             },
                             child: noteContainer(
                               title: Text(
@@ -111,7 +120,8 @@ class HomeScreen extends StatelessWidget {
                 );
               }
             },
-          ),
+          )
+          ,
         ),
       ),
     );
