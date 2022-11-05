@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/authcontroller.dart';
@@ -44,6 +46,8 @@ class AddNoteScreen extends StatelessWidget {
             TextField(
               controller: authcontroller.titlecontroller(note),
               textAlign: TextAlign.center,
+              minLines: 1,
+              maxLines: 30,
               decoration: InputDecoration(
                 hintText: 'Title',
                 hintStyle: titleStyle,
@@ -55,6 +59,10 @@ class AddNoteScreen extends StatelessWidget {
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: '  Note',
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
                 ),
                 maxLines: 18,
                 autofocus: true,

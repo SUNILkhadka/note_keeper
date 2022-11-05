@@ -75,15 +75,16 @@ class AuthController extends ChangeNotifier {
       return false;
     }
     if (update == true) {
-      if (note!.title != _titlecontroller.text &&
+      if (note!.title != _titlecontroller.text ||
           note.note != _notecontroller.text) {
-        await firestore
+        firestore
             .collection('/${firebaseAuth.currentUser!.uid}')
             .doc(note.id)
             .update(
               Note(
                 title: _titlecontroller.text,
                 note: _notecontroller.text,
+                created: FieldValue.serverTimestamp(),
               ).toJson(),
             )
             .then(
@@ -110,6 +111,7 @@ class AuthController extends ChangeNotifier {
           Note(
             title: _titlecontroller.text,
             note: _notecontroller.text,
+            created: FieldValue.serverTimestamp(),
           ).toJson(),
         )
         .then(
@@ -120,6 +122,54 @@ class AuthController extends ChangeNotifier {
           ),
         );
     return true;
+  }
+
+  // Snapshot to Object
+  List<Note> snapshotToMap(AsyncSnapshot<QuerySnapshot>? snapshot) {
+    List<Note> notes;
+    notes = snapshot!.data!.docs
+        .map(
+          (document) => Note(
+            id: document.id,
+            title: document['title'],
+            note: document['note'],
+          ),
+        )
+        .toList();
+    return notes;
+  }
+
+  // Selecting notes for longpress
+  List<String> isSelectedItems = [];
+  bool isLongPress = false;
+
+  selectDeselectItem(String item) {
+    if (!isSelectedItems.contains(item)) {
+      isSelectedItems.add(item);
+    } else {
+      isSelectedItems.remove(item);
+    }
+    if (isSelectedItems.isEmpty) {
+      isLongPress = false;
+    }
+    notifyListeners();
+  }
+
+  deleteNotes() async {
+    for (String str in isSelectedItems) {
+      firestore
+          .collection('/${firebaseAuth.currentUser!.uid}')
+          .doc(str)
+          .delete();
+    }
+    isLongPress = false;
+    notifyListeners();
+  }
+
+  clearLongPress() {
+    isSelectedItems.clear();
+    isLongPress = false;
+    notifyListeners();
   }
 
   // Methods for google sign in
@@ -149,20 +199,5 @@ class AuthController extends ChangeNotifier {
       );
       return;
     }
-  }
-
-  // Snapshot to Object
-  List<Note> snapshotToMap(AsyncSnapshot<QuerySnapshot>? snapshot) {
-    List<Note> notes;
-    notes = snapshot!.data!.docs
-        .map(
-          (document) => Note(
-            id: document.id,
-            title: document['title'],
-            note: document['note'],
-          ),
-        )
-        .toList();
-    return notes;
   }
 }

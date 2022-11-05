@@ -11,6 +11,11 @@ class MainAppTheme {
     backgroundColor: AppColor.backgroundWhite,
     scaffoldBackgroundColor: AppColor.backgroundWhite,
     primarySwatch: AppColor.primarySwatch,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.black,
+      ),
+    ),
     textTheme: TextTheme(
       displayLarge: _textStyle.displayLarge,
       displayMedium: _textStyle.displayMedium,
@@ -36,6 +41,11 @@ class MainAppTheme {
     scaffoldBackgroundColor: AppColor.backgroundBlack,
     primaryColor: AppColor.primaryColor,
     primarySwatch: AppColor.primarySwatch,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+      ),
+    ),
     textTheme: TextTheme(
       displayLarge: _textStyle.displayLarge.copyWith(color: AppColor.white),
       displayMedium: _textStyle.displayMedium.copyWith(color: AppColor.white),
