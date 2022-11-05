@@ -39,22 +39,22 @@ class AddNoteScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Add Note'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: authcontroller.titlecontroller(note),
-              textAlign: TextAlign.center,
-              minLines: 1,
-              maxLines: 30,
-              decoration: InputDecoration(
-                hintText: 'Title',
-                hintStyle: titleStyle,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: authcontroller.titlecontroller(note),
+                textAlign: TextAlign.center,
+                minLines: 1,
+                maxLines: 30,
+                decoration: InputDecoration(
+                  hintText: 'Title',
+                  hintStyle: titleStyle,
+                ),
               ),
-            ),
-            Expanded(
-              child: TextField(
+              TextField(
                 controller: authcontroller.notecontroller(note),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -66,9 +66,9 @@ class AddNoteScreen extends StatelessWidget {
                 ),
                 maxLines: 18,
                 autofocus: true,
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
