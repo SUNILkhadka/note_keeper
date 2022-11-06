@@ -13,53 +13,62 @@ class DrawerSettingPage extends StatelessWidget {
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: Text(
-              'Notes Keeper',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Text(
+                  'Notes Keeper',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Divider(
-            height: 1.5,
-            color: Colors.white54,
-          ),
-          TextButton(
-            onPressed: () {
-              authcontroller.firebaseAuth.signOut();
-              authcontroller.googleSigninObj.signOut();
-              Navigator.popAndPushNamed(context, RoutesManager.loginpage);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
+              const Divider(
+                height: 1.5,
+                color: Colors.white54,
+              ),
+              TextButton(
+                onPressed: () {
+                  authcontroller.firebaseAuth.signOut();
+                  authcontroller.googleSigninObj.signOut();
+                  Navigator.popAndPushNamed(context, RoutesManager.loginpage);
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Icon(FontAwesomeIcons.rightFromBracket),
-                      const SizedBox(
-                        width: 15,
+                      Row(
+                        children: [
+                          const Icon(FontAwesomeIcons.rightFromBracket),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          const Text('Sign out '),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
                       ),
-                      const Text('Sign out '),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        authcontroller.firebaseAuth.currentUser!.displayName!,
-                        overflow: TextOverflow.ellipsis,
-                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 5),
+            child: Text(
+              'Logged in as ${authcontroller.firebaseAuth.currentUser!.displayName!}',
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
         ],
       ),
     );
