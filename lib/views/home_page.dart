@@ -17,11 +17,19 @@ class HomeScreen extends StatelessWidget {
     final authcontroller = Provider.of<AuthController>(context);
     return SafeArea(
       child: Scaffold(
+        key: _key,
         drawer: const DrawerSettingPage(),
         bottomNavigationBar: Container(
+          color: Colors.transparent,
           height: 30,
-          // color: Colors.white38,
         ),
+        // bottomNavigationBar: BottomAppBar(
+        //   notchMargin: 4,
+        //   shape: CircularNotchedRectangle(),
+        //   child: Container(
+        //     height: 50,
+        //   ),
+        // ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, RoutesManager.newnote);
@@ -45,13 +53,15 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                       )
-                    : TextButton(
-                        onPressed: () => _key.currentState!.openDrawer(),
-                        child: const Icon(
-                          FontAwesomeIcons.bars,
-                          size: 18,
-                        ),
-                      ),
+                    //       : TextButton(
+                    //           onPressed: () => _key.currentState!.openDrawer(),
+                    //           child: const Icon(
+                    //             FontAwesomeIcons.bars,
+                    //             size: 18,
+                    //           ),
+                    //         ),
+                    // ),
+                    : null,
                 title: !authcontroller.isLongPress
                     ? const TextField(
                         decoration: InputDecoration(
@@ -78,17 +88,31 @@ class HomeScreen extends StatelessWidget {
                           ),
                         )
                       ]
-                    : null,
+                    : [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: CircleAvatar(
+                            backgroundImage: authcontroller
+                                        .firebaseAuth.currentUser ==
+                                    null
+                                ? null
+                                : NetworkImage(
+                                    '${authcontroller.firebaseAuth.currentUser!.photoURL}'),
+                          ),
+                        )
+                      ],
                 centerTitle: false,
-                elevation: 10.0,
-                automaticallyImplyLeading: false,
+                elevation: 5.0,
+                titleSpacing: 0,
                 expandedHeight: 50,
                 floating: true,
                 snap: true,
+                stretch: false,
               )
             ];
           },
           body: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             child: authcontroller.firebaseAuth.currentUser == null
                 ? const Center(
                     child: Text('Sign in first !'),

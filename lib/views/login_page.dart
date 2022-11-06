@@ -49,17 +49,17 @@ class LoginScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  mainButton(
-                    context,
-                    text: "Continue Without Signing",
-                    iconData: Icons.home,
-                    onPressed: () {
-                      Navigator.popAndPushNamed(
-                          context, RoutesManager.homepage);
-                    },
-                    backgroundColor: AppColor.background,
-                    textColor: Colors.white,
-                  ),
+                  // mainButton(
+                  //   context,
+                  //   text: "Continue Without Signing",
+                  //   iconData: Icons.home,
+                  //   onPressed: () {
+                  //     Navigator.popAndPushNamed(
+                  //         context, RoutesManager.homepage);
+                  //   },
+                  //   backgroundColor: AppColor.background,
+                  //   textColor: Colors.white,
+                  // ),
                   const SizedBox(
                     height: 30,
                   ),
