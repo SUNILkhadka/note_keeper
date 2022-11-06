@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/authcontroller.dart';
@@ -15,8 +13,13 @@ class AddNoteScreen extends StatelessWidget {
 
   final TextStyle titleStyle = const TextStyle(
     fontSize: 20,
-    fontWeight: FontWeight.w800,
+    fontWeight: FontWeight.w500,
     letterSpacing: 2,
+  );
+  final TextStyle textStyle = const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    letterSpacing: 1,
   );
 
   @override
@@ -37,34 +40,41 @@ class AddNoteScreen extends StatelessWidget {
           child: const Icon(FontAwesomeIcons.angleLeft),
         ),
         centerTitle: true,
-        title: const Text('Add Note'),
+        title: Text(
+          note == null ? 'Add Note' : 'Update Note',
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Column(
             children: [
               TextField(
+                scrollPhysics: const NeverScrollableScrollPhysics(),
                 controller: authcontroller.titlecontroller(note),
-                textAlign: TextAlign.center,
                 minLines: 1,
                 maxLines: 30,
                 decoration: InputDecoration(
+                  border: InputBorder.none,
                   hintText: 'Title',
                   hintStyle: titleStyle,
                 ),
               ),
               TextField(
+                scrollPhysics: const NeverScrollableScrollPhysics(),
                 controller: authcontroller.notecontroller(note),
+                textCapitalization: TextCapitalization.sentences,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
-                  hintText: '  Note',
+                  hintText: 'Note',
                 ),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                ),
-                maxLines: 18,
+                style: textStyle,
+                maxLength: 5000,
+                maxLines: null,
                 autofocus: true,
               )
             ],
