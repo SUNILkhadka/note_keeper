@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:note_keeper/controllers/authcontroller.dart';
+import 'package:note_keeper/controllers/controller.dart';
+import 'package:note_keeper/core/app_color.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:note_keeper/models/note.dart';
 import 'package:note_keeper/views/drawer.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         key: _key,
-        drawer: const DrawerSettingPage(),
+        drawer: DrawerSettingPage(),
         bottomNavigationBar: Container(
           color: Colors.transparent,
           height: 30,
@@ -30,15 +31,33 @@ class HomeScreen extends StatelessWidget {
         //     height: 50,
         //   ),
         // ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, RoutesManager.newnote);
-          },
-          child: const Icon(
-            FontAwesomeIcons.plus,
+        floatingActionButton: Ink(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: AppColor.FABborder,
+              width: 3.0,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColor.FABborder.withOpacity(0.9),
+                spreadRadius: 3,
+                blurRadius: 3,
+                offset: const Offset(0, 0),
+              ),
+            ],
+            shape: BoxShape.circle,
+          ),
+          child: FloatingActionButton(
+            backgroundColor: AppColor.FABbackground,
+            onPressed: () {
+              Navigator.pushNamed(context, RoutesManager.newnote);
+            },
+            child: const Icon(
+              FontAwesomeIcons.plus,
+            ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [

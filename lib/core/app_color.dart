@@ -11,6 +11,8 @@ class AppColor {
   static Color backgroundGray = const Color.fromARGB(255, 240, 240, 240);
 
   static Color navbar = const Color(0xFFad7ffb);
+  static Color FABborder = const Color(0xFF7671DE);
+  static Color FABbackground = const Color(0xFF9F9AE7);
   static Color background = Color.fromARGB(255, 97, 141, 245);
   static Color backgroundshadeblue = const Color(0xFFccd0f6);
   static Color backgroundshadepink = const Color(0xFFf594b7);

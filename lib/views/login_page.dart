@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:note_keeper/controllers/authcontroller.dart';
+import 'package:note_keeper/controllers/controller.dart';
 import 'package:note_keeper/core/app_color.dart';
 import 'package:note_keeper/core/app_text_style.dart';
 import 'package:note_keeper/core/routes.dart';
