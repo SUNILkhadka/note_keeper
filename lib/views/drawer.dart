@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/controller.dart';
+import 'package:note_keeper/controllers/them_settings.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:provider/provider.dart';
 
 class DrawerSettingPage extends StatelessWidget {
-  DrawerSettingPage({super.key});
-  bool? isDark;
+  const DrawerSettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final authcontroller = Provider.of<AuthController>(context);
-    isDark = authcontroller.getDarkBool();
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
@@ -42,13 +41,11 @@ class DrawerSettingPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Switch Theme'),
+                        const Text('Switch Theme'),
                         Switch.adaptive(
-                            value: isDark!,
-                            onChanged: (value) {
-                              print(isDark);
-                              print(value);
-                              isDark = value;
+                            value: context.read<ThemeSettings>().isDark,
+                            onChanged: (value) async {
+                              context.read<ThemeSettings>().switchTheme(value);
                             })
                       ],
                     ),
@@ -82,13 +79,13 @@ class DrawerSettingPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
-            children: [
-              const Icon(FontAwesomeIcons.rightFromBracket),
-              const SizedBox(
+            children: const [
+              Icon(FontAwesomeIcons.rightFromBracket),
+              SizedBox(
                 width: 15,
               ),
-              const Text('Sign out '),
-              const SizedBox(
+              Text('Sign out '),
+              SizedBox(
                 width: 10,
               ),
             ],

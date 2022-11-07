@@ -60,7 +60,7 @@ class MainAppTheme {
       labelMedium: _textStyle.labelMedium.copyWith(color: AppColor.white),
       labelSmall: _textStyle.labelSmall.copyWith(color: AppColor.white),
       bodyLarge: _textStyle.bodyLarge.copyWith(color: AppColor.white),
-      bodyMedium: _textStyle.bodyMedium.copyWith(color: AppColor.white),
+      bodyMedium: _textStyle.bodyMedium.copyWith(color: Colors.white54),
       bodySmall: _textStyle.bodySmall.copyWith(color: AppColor.white),
     ),
   );

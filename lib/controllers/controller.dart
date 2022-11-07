@@ -3,10 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:note_keeper/core/app_theme.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:note_keeper/models/note.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends ChangeNotifier {
   // TextEditing Controllers
@@ -22,9 +20,6 @@ class AuthController extends ChangeNotifier {
   GoogleSignInAccount? _user;
   GoogleSignInAccount? get user => _user;
   UserCredential? userCredential;
-
-  // Theme Setting variable
-  bool? isDark;
 
   // Controllers to update or add new note
   TextEditingController titlecontroller(Note? note) {
@@ -204,23 +199,5 @@ class AuthController extends ChangeNotifier {
       );
       return;
     }
-  }
-
-  // Theme Setting
-  // Get the current theme from sharedprefences
-
-  getDarkBool() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? isDark = prefs.getBool('themeValue');
-    return isDark;
-  }
-
-  // Switch theme
-  switchTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? boolValue = prefs.getBool('themeValue');
-    boolValue = !boolValue!;
-    prefs.setBool('themeValue', boolValue);
-    notifyListeners();
   }
 }

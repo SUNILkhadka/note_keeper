@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:note_keeper/controllers/controller.dart';
+import 'package:note_keeper/controllers/them_settings.dart';
 import 'package:note_keeper/core/app_color.dart';
 import 'package:note_keeper/core/routes.dart';
 import 'package:note_keeper/models/note.dart';
@@ -191,8 +192,13 @@ class HomeScreen extends StatelessWidget {
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w600,
+                                                color: context
+                                                        .read<ThemeSettings>()
+                                                        .isDark
+                                                    ? Colors.white70
+                                                    : Colors.black87,
                                               ),
                                             ),
                                       subtitle: note.note == ''
@@ -203,8 +209,8 @@ class HomeScreen extends StatelessWidget {
                                               softWrap: true,
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.white54),
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                     ),
                                   ),
@@ -240,7 +246,12 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(7),
       decoration: BoxDecoration(
         border: Border.all(
-          color: isSelected ? Colors.lightGreen : Colors.white54,
+          // color: isSelected ? Colors.lightGreen : Colors.white54,
+          color: isSelected
+              ? Colors.lightGreen
+              : context.read<ThemeSettings>().isDark
+                  ? Colors.white54
+                  : Colors.black26,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(15),
