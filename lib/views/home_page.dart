@@ -211,12 +211,16 @@ class HomeScreen extends StatelessWidget {
           ]
         : [
             Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                backgroundImage: authcontroller.firebaseAuth.currentUser == null
+              padding: const EdgeInsets.only(
+                right: 10,
+                top: 5,
+                bottom: 5,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: authcontroller.firebaseAuth.currentUser == null
                     ? Image.asset('assets/app-image/unknown.jpg')
-                        as ImageProvider
-                    : NetworkImage(
+                    : Image.network(
                         '${authcontroller.firebaseAuth.currentUser!.photoURL}'),
               ),
             )

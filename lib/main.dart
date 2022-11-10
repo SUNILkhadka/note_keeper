@@ -42,17 +42,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeSettings>(
       builder: (context, value, child) {
-        return GestureDetector(
-          onTap: FocusScope.of(context).unfocus,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Beta Notes Keeping',
-            theme: value.isDark ? MainAppTheme.dark : MainAppTheme.light,
-            initialRoute: FirebaseAuth.instance.currentUser == null
-                ? RoutesManager.loginpage
-                : RoutesManager.homepage,
-            onGenerateRoute: RoutesManager.routeSettings,
-          ),
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Beta Notes Keeping',
+          theme: value.isDark ? MainAppTheme.dark : MainAppTheme.light,
+          initialRoute: FirebaseAuth.instance.currentUser == null
+              ? RoutesManager.loginpage
+              : RoutesManager.homepage,
+          onGenerateRoute: RoutesManager.routeSettings,
         );
       },
     );

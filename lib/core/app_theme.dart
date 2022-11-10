@@ -46,6 +46,9 @@ class MainAppTheme {
         foregroundColor: Colors.white,
       ),
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColor.primaryColor,
+    ),
     textTheme: TextTheme(
       displayLarge: _textStyle.displayLarge.copyWith(color: AppColor.white),
       displayMedium: _textStyle.displayMedium.copyWith(color: AppColor.white),

@@ -11,6 +11,7 @@ class DrawerSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authcontroller = Provider.of<AuthController>(context);
+    final themesettings = Provider.of<ThemeSettings>(context);
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
@@ -43,9 +44,9 @@ class DrawerSettingPage extends StatelessWidget {
                       children: [
                         const Text('Switch Theme'),
                         Switch.adaptive(
-                            value: context.read<ThemeSettings>().isDark,
+                            value: themesettings.isDark,
                             onChanged: (value) async {
-                              context.read<ThemeSettings>().switchTheme(value);
+                              themesettings.switchTheme(value);
                             })
                       ],
                     ),
