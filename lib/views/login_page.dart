@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authcontroller = Provider.of<AuthController>(context, listen: true);
+    AuthController authcontroller =
+        Provider.of<AuthController>(context, listen: true);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.primaryColor,

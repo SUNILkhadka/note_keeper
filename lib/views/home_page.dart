@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authcontroller = Provider.of<AuthController>(context);
+    AuthController authcontroller = Provider.of<AuthController>(context);
     return SafeArea(
       child: Consumer<NoteController>(
         builder: (BuildContext context, notecontroller, _) {

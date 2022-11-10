@@ -10,8 +10,8 @@ class DrawerSettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authcontroller = Provider.of<AuthController>(context);
-    final themesettings = Provider.of<ThemeSettings>(context);
+    AuthController authcontroller = Provider.of<AuthController>(context);
+    ThemeSettings themesettings = Provider.of<ThemeSettings>(context);
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Column(
