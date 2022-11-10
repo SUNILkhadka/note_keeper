@@ -65,8 +65,8 @@ class AppTextStyle {
     color: AppColor.blackGrey,
     fontSize: 16,
   );
-  TextStyle bodyMedium = TextStyle(
-    color: AppColor.blackGrey,
+  TextStyle bodyMedium = const TextStyle(
+    color: Colors.black87,
     fontSize: 14,
   );
   TextStyle bodySmall = TextStyle(

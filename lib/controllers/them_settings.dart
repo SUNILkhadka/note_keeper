@@ -12,7 +12,7 @@ class ThemeSettings extends ChangeNotifier {
   // Switch theme
   switchTheme(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('themeValue', value);
+    prefs.setBool('darkTheme', value);
     isDark = value;
     notifyListeners();
   }

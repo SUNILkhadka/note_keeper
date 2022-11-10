@@ -181,13 +181,23 @@ class AuthController extends ChangeNotifier {
     GoogleSignInAccount? googleUser = await googleSigninObj.signIn();
     if (googleUser != null) {
       _user = googleUser;
-      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      OAuthCredential credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
-      userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      try {
+        GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        OAuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+          accessToken: googleAuth.accessToken,
+        );
+        userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+      } catch (error) {
+        messengerState.showSnackBar(
+          SnackBar(
+            content: Text(
+              error.toString(),
+            ),
+          ),
+        );
+      }
 
       if (userCredential != null) {
         navigator.pushReplacementNamed(RoutesManager.homepage);
