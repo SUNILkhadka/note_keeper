@@ -235,6 +235,7 @@ class HomeScreen extends StatelessWidget {
             onChanged: (value) {
               notecontroller.searchText(value);
             },
+            style: TextStyle(color: Colors.white70),
             decoration: const InputDecoration(
               hintStyle: TextStyle(
                 color: Colors.white24,
