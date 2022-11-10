@@ -2,7 +2,7 @@
     package="com.note.keeper.note_keeper">
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
-        android:label="Keep Notes"
+        android:label="Notes - Note keeper"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
