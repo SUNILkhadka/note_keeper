@@ -42,7 +42,7 @@ class DrawerSettingPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Switch Theme'),
+                        const Text('Dark Theme Mode'),
                         Switch.adaptive(
                             value: themesettings.isDark,
                             onChanged: (value) async {
